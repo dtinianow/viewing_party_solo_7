@@ -4,8 +4,10 @@
 <br>
 <%= link_to 'Find Top Rated Movies', user_movies_path(@user) %>
 <br><br>
- <div class="form-group">
-    <%= text_field_tag :query, params[:query], placeholder: 'Search', class: "form-control" %>
-    <%= button_to 'Find Movies' %>
+<%= form_with url: user_movies_path(@user), method: :get, local: true do %>
+  <div class="form-group">
+    <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search" %>
   </div>
+  <%= submit_tag "Find Movies", class: "btn btn-primary" %>
+<% end %>
 <br>
