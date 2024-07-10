@@ -10,29 +10,48 @@ class MovieService
   end
 
   def get_movies_by_query(query)
-    response = conn.get("search/movie") do |req|
-      req.params['query'] = "#{query}"
+    response = conn.get('search/movie') do |req|
+      req.params['language'] = 'en-US'
+      req.params['page'] = '1'
+      req.params['query'] = query.to_s
       req.params['include_adult'] = 'false'
-      default_params.each { |k, v| req.params[k] = v }
     end
-    parse(response)
+    parse(response)['results'].first(20).map { |movie| Movie.new(movie) }
   end
 
   def get_top_rated_movies
-    response = conn.get("movie/top_rated") do |req|
-      default_params.each { |k, v| req.params[k] = v }
+    response = conn.get('movie/top_rated') do |req|
+      req.params['language'] = 'en-US'
+      req.params['page'] = '1'
     end
-    parse(response)
+    parse(response)['results'].first(20).map { |movie| Movie.new(movie) }
+  end
+
+  def get_movie(id)
+    movie = get_movie_details(id)
+    cast = get_cast(id)
+    reviews = get_reviews(id)
+  end
+
+  def get_movie_details(id)
+    response = conn.get("movie/#{id}") do |req|
+      req.params['language'] = 'en-US'
+    end
+    Movie.new(parse(response))
+  end
+
+  def get_cast(id)
+    response = conn.get("movie/#{id}/credits") do |req|
+      req.params['language'] = 'en-US'
+    end
+    parse(response)['cast']
+    #character and name
   end
 
   private
 
-  def default_params
-    { 'language': 'en-US', 'page': '1'}
-  end
-
   def parse(response)
-    JSON.parse(response.body)["results"].first(20).map { |movie_info| Movie.new(movie_info) }
+    JSON.parse(response.body)
   end
 
   def conn

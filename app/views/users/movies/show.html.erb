@@ -1,0 +1,29 @@
+<h1>Viewing Party</h1>
+<br>
+<h3><%= @movie.title %></h3>
+<%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-secondary' %><br><br>
+<%= link_to "Create Viewing Party for #{@movie.title}", discover_user_path(@user), class: 'btn btn-primary' %><br><br>
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <p>Vote: <%= @movie.vote_average %></p>
+    </div>
+    <div class="col">
+      <p>Runtime: <%= format_minutes(@movie.runtime) %></p>
+    </div>
+    <div class="col">
+      <p>Genre: <%= @movie.genres.join(', ') %></p>
+    </div>
+  </div>
+  <div class="row">
+    <p>Summary</p>
+    <p><%= @movie.overview %></p>
+  </div>
+  <div class="row">
+    <p>Cast</p>
+  </div>
+  <div class="row">
+    <p>COUNT Reviews</p>
+  </div>
+</div>

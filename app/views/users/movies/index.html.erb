@@ -6,7 +6,7 @@
     <% @movies.each do |movie| %>
         <div class="row">
           <div class="col">
-            <p><%= movie.title %></p>
+            <p><%= link_to "#{movie.title}", user_movie_path(@user, movie.id) %></p>
           </div>
           <div class="col">
             <p>Vote Average: <%= movie.vote_average %></p>
