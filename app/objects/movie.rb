@@ -1,15 +1,13 @@
 class Movie
   attr_reader :genres, :id, :overview, :runtime, :title, :vote_average
+  attr_accessor :cast, :reviews
 
   def initialize(params)
-    # @cast #from other endpoint
-    # @genres = parse_genres(params['genres'])
+    @genres = parse_genres(params['genres']) if params['genres']
     @id = params['id']
-    # @overview = params['overview']
+    @overview = params['overview']
     @title = params['title']
-    # @review_count #from other endpoint
-    # @reviews #from other endopint, includes author and info
-    # @runtime = params['runtime'] #needs formatting
+    @runtime = params['runtime']
     @vote_average = params['vote_average']
   end
 

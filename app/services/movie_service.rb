@@ -29,9 +29,12 @@ class MovieService
 
   def get_movie(id)
     movie = get_movie_details(id)
-    cast = get_cast(id)
-    reviews = get_reviews(id)
+    movie.cast = get_cast(id)
+    movie.reviews = get_reviews(id)
+    movie
   end
+
+  private
 
   def get_movie_details(id)
     response = conn.get("movie/#{id}") do |req|
@@ -44,11 +47,16 @@ class MovieService
     response = conn.get("movie/#{id}/credits") do |req|
       req.params['language'] = 'en-US'
     end
-    parse(response)['cast']
-    #character and name
+    parse(response)['cast'].first(10).map { |cast_member| CastMember.new(cast_member) }
   end
 
-  private
+  def get_reviews(id)
+    response = conn.get("movie/#{id}/reviews") do |req|
+      req.params['language'] = 'en-US'
+      req.params['page'] = '1'
+    end
+    parse(response)['results'].map { |review| Review.new(review) }
+  end
 
   def parse(response)
     JSON.parse(response.body)

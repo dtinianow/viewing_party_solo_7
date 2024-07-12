@@ -22,8 +22,19 @@
   </div>
   <div class="row">
     <p>Cast</p>
+    <ul class="movie-info-list">
+      <% @movie.cast.each do |cast_member| %>
+        <li><div><%= cast_member.name %> - <%= cast_member.character %></div></li>
+      <% end %>
+    </ul>
   </div>
   <div class="row">
-    <p>COUNT Reviews</p>
+    <p><%= @movie.reviews.count %> Reviews</p>
+    <ul class="movie-info-list">
+      <% @movie.reviews.each do |review| %>
+        <li><div><%= review.author %> - <%= review.content %></div></li>
+        <br>
+      <% end %>
+    </ul>
   </div>
 </div>
