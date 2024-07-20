@@ -1,0 +1,16 @@
+<h1>Viewing Party</h1>
+
+<%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-primary' %><br><br>
+
+<div class="container text-center">
+    <% @movies.each do |movie| %>
+        <div class="row">
+          <div class="col">
+            <p><%= link_to "#{movie.title}", user_movie_path(@user, movie.id) %></p>
+          </div>
+          <div class="col">
+            <p>Vote Average: <%= movie.vote_average %></p>
+          </div>
+        </div>
+    <% end %>
+</div>
