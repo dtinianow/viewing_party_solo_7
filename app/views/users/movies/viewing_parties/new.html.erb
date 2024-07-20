@@ -1,0 +1,60 @@
+<h1>Viewing Party</h1>
+<br>
+<h3>Create a Party for <%= @movie.title %></h3>
+<br>
+<%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-primary' %><br><br>
+
+<%= form_with model: @viewing_party, url: user_movie_viewing_parties_path(@user, @movie.id), local: true do |form| %>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Viewing Party Details</h3>
+    </div>
+    <div class="card-body">
+      <% if @viewing_party.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@viewing_party.errors.count, "error") %> prohibited this viewing_party from being saved:</h2>
+          <ul>
+            <% @viewing_party.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="form-group">
+        <label for="custom-data" class="form-label">Movie Title</label>
+        <span class="fw-bold"><%= @movie.title %></span>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :duration, "Duration in Minutes" %>
+        <%= form.number_field :duration, min: @movie.runtime, required: true, value: @movie.runtime %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :date, "Day" %>
+        <%= form.date_field :date, required: true, value: Date.today %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :start_time, "Start Time" %>
+        <%= form.time_field :start_time, required: true, value: '20:00' %>
+      </div>
+
+      <div class="form-group">
+        <label>Invite Other Users</label>
+        <div class="checkboxes">
+          <% @users.each do |user| %>
+            <div class="form-check">
+              <%= check_box_tag "viewing_party[user_ids][]", user.id, false, class: 'form-check-input' %>
+              <%= label_tag "viewing_party_user_ids_#{user.id}", "#{user.name} (#{user.email})", class: 'form-check-label' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="actions card-footer">
+        <%= form.submit "Create Party" %>
+      </div>
+    </div>
+  </div>
+<% end %>
