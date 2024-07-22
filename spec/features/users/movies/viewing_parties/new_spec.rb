@@ -134,6 +134,8 @@ RSpec.describe 'Create New Viewing Party', type: :feature do
 
       viewing_party = ViewingParty.first
 
+      expect(viewing_party.movie_id_from_tmdb).to eq(@movie['id'])
+      expect(viewing_party.movie_title).to eq(@movie['title'])
       expect(viewing_party.users.count).to eq(1)
       expect(viewing_party.find_host).to eq(@user)
     end
@@ -168,6 +170,8 @@ RSpec.describe 'Create New Viewing Party', type: :feature do
 
       expect(viewing_party.users.count).to eq(2)
       expect(viewing_party.find_host).to eq(@user)
+      expect(viewing_party.movie_id_from_tmdb).to eq(@movie['id'])
+      expect(viewing_party.movie_title).to eq(@movie['title'])
       expect(UserParty.count).to eq(2)
     end
 
