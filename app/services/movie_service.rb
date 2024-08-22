@@ -34,6 +34,14 @@ class MovieService
     movie
   end
 
+  def get_watch_providers(id)
+    response = conn.get("movie/#{id}/watch/providers")
+    results = parse(response)['results']['US']
+    buy_providers = results['buy'].map { |provider| WatchProvider.new(provider['logo_path'], 'buy') }
+    rent_providers = results['rent'].map { |provider| WatchProvider.new(provider['logo_path'], 'rent') }
+    buy_providers + rent_providers
+  end
+
   private
 
   def get_movie_details(id)

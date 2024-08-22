@@ -2,7 +2,7 @@ module Users
   module Movies
     class ViewingPartiesController < ApplicationController
       before_action :set_user
-      before_action :set_movie
+      before_action :set_movie, except: %i[show]
       def new
         @viewing_party = ViewingParty.new
         @viewing_party.users.build
@@ -12,6 +12,8 @@ module Users
       def create
         ActiveRecord::Base.transaction do
           @viewing_party = ViewingParty.new(viewing_party_params)
+          @viewing_party.movie_title = @movie.title
+          @viewing_party.movie_id_from_tmdb = @movie.id
           @viewing_party.save!
           UserParty.create!(user: @user, viewing_party: @viewing_party, host: true)
           params[:viewing_party][:user_ids]&.each do |user_id|
@@ -29,7 +31,11 @@ module Users
         end
       end
 
-      def show; end
+      def show
+        @viewing_party = ViewingParty.find(params[:id])
+        @movie = Movie.new({ 'id' => @viewing_party.movie_id_from_tmdb, 'title' => @viewing_party.movie_title })
+        @watch_providers = @movie.watch_providers
+      end
 
       private
 

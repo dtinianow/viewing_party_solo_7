@@ -27,6 +27,10 @@ class Movie
     MovieService.new
   end
 
+  def watch_providers
+    Movie.service.get_watch_providers(id)
+  end
+
   private
 
   def parse_genres(genres)

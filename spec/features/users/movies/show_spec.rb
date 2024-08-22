@@ -79,8 +79,6 @@ RSpec.describe 'Find movie', type: :feature do
 
   describe 'When a user visits a movie page' do
     it 'They see details about that movie, the cast, and reviews' do
-      # expect(page).to have_link("Create Viewing Party for #{@movie["title"]}", href: "/users/#{@user.id}/movies")
-
       stub_request(:get, "https://api.themoviedb.org/3/movie/#{@movie['id']}?language=en-US")
         .with(
           headers: {
@@ -116,6 +114,7 @@ RSpec.describe 'Find movie', type: :feature do
 
       visit user_movie_path(@user, @movie['id'])
 
+      expect(page).to have_link("Create Viewing Party for #{@movie["title"]}")
       expect(page).to have_content(@movie['title'])
       expect(page).to have_content("Vote: #{@movie['vote_average']}")
       expect(page).to have_content('Runtime: 2 hr and 22 min')
