@@ -13,7 +13,7 @@
                <li><%= attendee.name %> </li>
             <% end %>
          </ol>
-
+        <%= link_to 'Party', user_movie_viewing_party_path(@user, party.movie_id_from_tmdb, party.id), class: 'btn btn-secondary' %>
     </div><br>
   <% end %>
 </section>
