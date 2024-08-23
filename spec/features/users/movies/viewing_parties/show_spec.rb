@@ -22,8 +22,6 @@ RSpec.describe 'Find viewing party', type: :feature do
         }
       }
     }
-
-    @image_url = 'https://image.tmdb.org/t/p/w500/'
   end
 
   describe 'When a user visits a viewing party show page' do
@@ -46,9 +44,9 @@ RSpec.describe 'Find viewing party', type: :feature do
       expect(page).to have_content("Start Time: #{@viewing_party.start_time}")
       expect(page).to have_content("Date: #{@viewing_party.date}")
       expect(page).to have_content('Rent')
-      expect(page).to have_css('.buy-providers img[src="' + @image_url + @watch_providers['results']['US']['buy'].first['logo_path'] + '"]')
+      expect(page).to have_css(".buy-providers img[src=\"#{TMDB_IMAGE_URL}#{@watch_providers['results']['US']['buy'].first['logo_path']}\"]")
       expect(page).to have_content('Buy')
-      expect(page).to have_css('.rent-providers img[src="' + @image_url + @watch_providers['results']['US']['rent'].first['logo_path'] + '"]')
+      expect(page).to have_css(".rent-providers img[src=\"#{TMDB_IMAGE_URL}#{@watch_providers['results']['US']['rent'].first['logo_path']}\"]")
     end
   end
 end

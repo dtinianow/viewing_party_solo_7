@@ -1,0 +1,27 @@
+<h1>Viewing Party</h1>
+
+<%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-primary' %><br><br>
+
+<div class="container text-center">
+    <% @movies.each do |movie| %>
+        <div class="row">
+          <div class="col">
+            <p>Title: <%= link_to(movie.title, user_movie_path(@user, movie.id)) %></p>
+          </div>
+          <div class="col">
+            <p>Release Date: <%= movie.release_date %></p>
+          </div>
+          <div class="col">
+            <p>Overview: <%= movie.overview %></p>
+          </div>
+          <div class="col">
+            <% if movie.poster_path.present? %>            
+              <p>Poster: <%= image_tag(TMDB_IMAGE_URL + movie.poster_path, class: 'image-fluid') %></p>
+            <% end %>            
+          </div>
+          <div class="col">
+            <p>Vote Average: <%= movie.vote_average %></p>
+          </div>
+        </div>
+    <% end %>
+</div>

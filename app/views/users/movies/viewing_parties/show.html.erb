@@ -17,14 +17,14 @@
   <h3>Rent</h3>
   <div class="row rent-providers">
     <% WatchProvider.rent_providers(@watch_providers).each do |provider| %>
-      <div class="col"><%= image_tag("https://image.tmdb.org/t/p/w500/#{provider.logo_path}", class: "img-fluid") %></div>
+      <div class="col"><%= image_tag(TMDB_IMAGE_URL + provider.logo_path, class: "img-fluid") %></div>
     <% end %>
   </div>
   <br><br>
   <h3>Buy</h3>
   <div class="row buy-providers">
     <% WatchProvider.buy_providers(@watch_providers).each do |provider| %>
-      <div class="col"><%= image_tag("https://image.tmdb.org/t/p/w500/#{provider.logo_path}", class: "img-fluid") %></div>
+      <div class="col"><%= image_tag(TMDB_IMAGE_URL + provider.logo_path, class: "img-fluid") %></div>
     <% end %>
   </div>
 </div>

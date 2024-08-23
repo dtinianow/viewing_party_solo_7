@@ -35,6 +35,9 @@ module Users
         @viewing_party = ViewingParty.find(params[:id])
         @movie = Movie.new({ 'id' => @viewing_party.movie_id_from_tmdb, 'title' => @viewing_party.movie_title })
         @watch_providers = @movie.watch_providers
+      rescue StandardError
+        flash[:error] = 'Failed to fetch data. Please try again later.'
+        redirect_to user_path(@user)
       end
 
       private

@@ -1,5 +1,5 @@
 class Movie
-  attr_reader :genres, :id, :overview, :runtime, :title, :vote_average
+  attr_reader :genres, :id, :overview, :runtime, :title, :vote_average, :release_date, :poster_path
   attr_accessor :cast, :reviews
 
   def initialize(params)
@@ -9,6 +9,12 @@ class Movie
     @title = params['title']
     @runtime = params['runtime']
     @vote_average = params['vote_average']
+    @release_date = params['release_date']
+    @poster_path = params['poster_path']
+  end
+
+  def self.service
+    MovieService.new
   end
 
   def self.find(id)
@@ -23,8 +29,8 @@ class Movie
     Movie.service.get_top_rated_movies
   end
 
-  def self.service
-    MovieService.new
+  def self.similar_movies(id)
+    Movie.service.get_similar_movies(id)
   end
 
   def watch_providers

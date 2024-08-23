@@ -34,6 +34,14 @@ class MovieService
     movie
   end
 
+  def get_similar_movies(id)
+    response = conn.get("movie/#{id}/similar") do |req|
+      req.params['language'] = 'en-US'
+      req.params['page'] = '1'
+    end
+    parse(response)['results'].map { |movie| Movie.new(movie) }
+  end
+
   def get_watch_providers(id)
     response = conn.get("movie/#{id}/watch/providers")
     results = parse(response)['results']['US']

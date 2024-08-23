@@ -3,6 +3,7 @@
 <h3><%= @movie.title %></h3>
 <%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-secondary' %><br><br>
 <%= link_to "Create Viewing Party for #{@movie.title}", new_user_movie_viewing_party_path(@user, @movie.id), class: 'btn btn-primary' %><br><br>
+<%= link_to 'Get Similar Movies', similar_user_movie_path(@user, @movie.id), class: 'btn btn-secondary' %><br><br>
 
 <div class="container text-center">
   <div class="row">
