@@ -11,9 +11,13 @@ module Users
 
       def create
         ActiveRecord::Base.transaction do
-          @viewing_party = ViewingParty.new(viewing_party_params)
-          @viewing_party.movie_title = @movie.title
-          @viewing_party.movie_id_from_tmdb = @movie.id
+          @viewing_party = ViewingParty.new(
+            viewing_party_params.merge(
+              movie_title: @movie.title,
+              movie_id_from_tmdb: @movie.id,
+              movie_poster_path: @movie.poster_path
+            )
+          )
           @viewing_party.save!
           UserParty.create!(user: @user, viewing_party: @viewing_party, host: true)
           params[:viewing_party][:user_ids]&.each do |user_id|

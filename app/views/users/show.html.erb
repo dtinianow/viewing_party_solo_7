@@ -2,18 +2,27 @@
 <%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-primary' %><br><br>
 
 <section class="viewing_parties">
-  <% @user.viewing_parties.each do |party| %>
-    <div class="viewing_party">
-         Party Time: <%= party.date %> at <%= party.start_time %><br>
-         Host: <%= party.find_host.name %><br>
-         Who's Coming? <br/>
-
-         <ol>
-            <% party.users.each do |attendee| %>
-               <li><%= attendee.name %> </li>
-            <% end %>
-         </ol>
-        <%= link_to 'Party', user_movie_viewing_party_path(@user, party.movie_id_from_tmdb, party.id), class: 'btn btn-secondary' %>
-    </div><br>
-  <% end %>
+  <div class="row">
+    <% @user.viewing_parties.each do |party| %>
+      <div class="border">
+        <% if party.movie_poster_path.present? %>
+          <div><%= image_tag(TMDB_IMAGE_URL + party.movie_poster_path, class: 'image-fluid w-25') %></div>
+        <% end %>
+        <div><%= link_to(party.movie_title, user_movie_path(@user, party.movie_id_from_tmdb)) %></div>
+        <div><%= party.find_host === @user ? "Hosting" : "Invited" %></div>
+        <div>
+            Party Time: <%= party.date %> at <%= party.start_time %><br>
+            Who's Coming? <br/>
+            <%= "Host: #{party.find_host.name}" if (party.find_host != @user) %>
+            <ol>
+                <% party.users.each do |attendee| %>
+                  <li class="<%= 'fw-bold' if attendee.id === @user.id %>"><%= attendee.name %> </li>
+                <% end %>
+            </ol>
+            <%= link_to 'Party', user_movie_viewing_party_path(@user, party.movie_id_from_tmdb, party.id), class: 'btn btn-secondary' %>
+            <br><br>
+        </div>
+      </div><br>
+    <% end %>
+  </div>
 </section>

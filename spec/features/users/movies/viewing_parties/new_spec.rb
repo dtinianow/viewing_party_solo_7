@@ -128,8 +128,10 @@ RSpec.describe 'Create New Viewing Party', type: :feature do
       expect(ViewingParty.count).to eq(1)
       expect(UserParty.count).to eq(1)
       expect(page).to have_current_path(user_path(@user))
+      expect(page).to have_content @movie['title']
+      expect(page).to have_css "img[src=\"#{TMDB_IMAGE_URL}#{@movie['poster_path']}\"]"
       expect(page).to have_content 'Party Time: 07/21/2026 at 13:30'
-      expect(page).to have_content "Host: #{@user.name}"
+      expect(page).to have_content 'Hosting'
       expect(page).to have_content "Who's Coming?"
 
       viewing_party = ViewingParty.first
@@ -160,8 +162,10 @@ RSpec.describe 'Create New Viewing Party', type: :feature do
 
       expect(ViewingParty.count).to eq(1)
       expect(page).to have_current_path(user_path(@user))
+      expect(page).to have_content @movie['title']
+      expect(page).to have_css "img[src=\"#{TMDB_IMAGE_URL}#{@movie['poster_path']}\"]"
       expect(page).to have_content 'Party Time: 07/21/2026 at 13:30'
-      expect(page).to have_content "Host: #{@user.name}"
+      expect(page).to have_content 'Hosting'
       expect(page).to have_content "Who's Coming?"
       expect(page).to have_content user3.name
       expect(page).not_to have_content user2.name
