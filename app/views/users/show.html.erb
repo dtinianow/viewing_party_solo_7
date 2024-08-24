@@ -1,28 +1,36 @@
-<h1><%= "#{@user.name}'s Dashboard" %></h1><br>
-<%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-primary' %><br><br>
-
-<section class="viewing_parties">
-  <div class="row">
-    <% @user.viewing_parties.each do |party| %>
-      <div class="border">
-        <% if party.movie_poster_path.present? %>
-          <div><%= image_tag(TMDB_IMAGE_URL + party.movie_poster_path, class: 'image-fluid w-25') %></div>
-        <% end %>
-        <div><%= link_to(party.movie_title, user_movie_path(@user, party.movie_id_from_tmdb)) %></div>
-        <div><%= party.find_host === @user ? "Hosting" : "Invited" %></div>
-        <div>
-            Party Time: <%= party.date %> at <%= party.start_time %><br>
-            Who's Coming? <br/>
-            <%= "Host: #{party.find_host.name}" if (party.find_host != @user) %>
-            <ol>
-                <% party.users.each do |attendee| %>
-                  <li class="<%= 'fw-bold' if attendee.id === @user.id %>"><%= attendee.name %> </li>
-                <% end %>
-            </ol>
-            <%= link_to 'Party', user_movie_viewing_party_path(@user, party.movie_id_from_tmdb, party.id), class: 'btn btn-secondary' %>
-            <br><br>
-        </div>
-      </div><br>
-    <% end %>
+<div class="container my-4">
+  <h4 class="mb-4 text-center"><%= "#{@user.name}'s Dashboard" %></h4>
+  <div class="text-center mb-4">
+    <%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-secondary' %>
   </div>
-</section>
+
+  <section class="viewing_parties">
+    <div class="row">
+      <% @user.viewing_parties.each do |party| %>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100">
+            <% if party.movie_poster_path.present? %>
+              <img src="<%= TMDB_IMAGE_URL + party.movie_poster_path %>" class="card-img-top" alt="<%= party.movie_title %>">
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to party.movie_title, user_movie_path(@user, party.movie_id_from_tmdb), class: 'text-decoration-none' %></h5>
+              <p class="card-text">
+                <strong><%= party.find_host === @user ? "Hosting" : "Invited" %></strong><br>
+                <strong>Party Time:</strong> <%= party.date %> at <%= party.start_time %><br>
+                <strong>Who's Coming?</strong>
+              </p>
+              <ol class="list-unstyled">
+                <% party.users.each do |attendee| %>
+                  <li class="<%= 'fw-bold' if attendee.id === @user.id %>"><%= "Host: " if (party.find_host == attendee) %><%= attendee.name %></li>
+                <% end %>
+              </ol>
+            </div>
+            <div class="card-footer text-center">
+              <%= link_to 'Party', user_movie_viewing_party_path(@user, party.movie_id_from_tmdb, party.id), class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</div>
