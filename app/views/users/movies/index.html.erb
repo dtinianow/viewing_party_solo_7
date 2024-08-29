@@ -1,6 +1,6 @@
 <div class="container text-center">
   <h4 class="my-4">Movies</h4>
-  <%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-primary' %><br><br>
+  <%= link_to 'Discover Movies', discover_user_path(@user), class: 'btn btn-secondary' %><br><br>
   <div class="justify-content-center">
       <% if @movies.any? %>
         <% @movies.each do |movie| %>

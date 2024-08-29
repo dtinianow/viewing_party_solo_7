@@ -1,32 +1,50 @@
-<h1><%= "#{@user.name}'s Party" %></h1><br>
-<%= link_to "#{@user.name}'s Dashboard", user_path(@user), class: 'btn btn-primary' %><br><br>
+<div class="container my-4">
+  <h4 class="text-center mb-4"><%= "#{@user.name}'s Party" %></h4>
 
-<div class="container text-center">
-  <div class="row">
-    <div class="col">
-      <p>Movie: <%= @movie.title %></p>
-    </div>
-    <div class="col">
-      <p>Start Time: <%= @viewing_party.start_time %></p>
-    </div>
-    <div class="col">
-      <p>Date: <%= @viewing_party.date %></p>
+  <div class="text-center mb-4">
+    <%= link_to "#{@user.name}'s Dashboard", user_path(@user), class: 'btn btn-secondary' %>
+  </div>
+
+  <div class="text-center mb-4">
+    <div class="row border-bottom border-3">
+      <div class="col-md-4 mb-3">
+        <p class="fw-bold">Movie:</p>
+        <p><%= @movie.title %></p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <p class="fw-bold">Start Time:</p>
+        <p><%= Time.parse(@viewing_party.start_time).strftime("%l:%M %p") %></p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <p class="fw-bold">Date:</p>
+        <p><%= Date.parse(@viewing_party.date).strftime("%-m/%-d/%y") %></p>
+      </div>
     </div>
   </div>
-  <br>
-  <h3>Rent</h3>
-  <div class="row rent-providers">
-    <% WatchProvider.rent_providers(@watch_providers).each do |provider| %>
-      <div class="col"><%= image_tag(TMDB_IMAGE_URL + provider.logo_path, class: "img-fluid") %></div>
-    <% end %>
+
+  <div class="text-center mb-4 pb-4 border-bottom">
+    <h5 class="mb-4">Rent</h5>
+    <div class="row row-cols-3 row-cols-md-3 row-cols-lg-4 g-4">
+      <% WatchProvider.rent_providers(@watch_providers).each do |provider| %>
+        <div class="col d-flex justify-content-center">
+          <%= image_tag(TMDB_IMAGE_URL + provider.logo_path, class: "img-fluid border rounded shadow-sm", style: "max-width: 80px; height: auto;") %>
+        </div>
+      <% end %>
+    </div>
   </div>
-  <br><br>
-  <h3>Buy</h3>
-  <div class="row buy-providers">
-    <% WatchProvider.buy_providers(@watch_providers).each do |provider| %>
-      <div class="col"><%= image_tag(TMDB_IMAGE_URL + provider.logo_path, class: "img-fluid") %></div>
-    <% end %>
+
+  <div class="text-center mb-4 pb-4 border-bottom">
+    <h5 class="mb-4">Buy</h5>
+    <div class="row row-cols-3 row-cols-md-3 row-cols-lg-4 g-4">
+      <% WatchProvider.buy_providers(@watch_providers).each do |provider| %>
+        <div class="col d-flex justify-content-center">
+          <%= image_tag(TMDB_IMAGE_URL + provider.logo_path, class: "img-fluid border rounded shadow-sm", style: "max-width: 80px; height: auto;") %>
+        </div>
+      <% end %>
+    </div>
   </div>
+
+  <footer class="text-center mt-4 mb-2 text-muted">
+    Buy/Rent data provided by JustWatch
+  </footer>
 </div>
-<br>
-<footer>Buy/Rent data provided by JustWatch</footer>
