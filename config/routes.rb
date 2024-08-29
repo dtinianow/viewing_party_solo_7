@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 
     resources :movies, only: %i[index show], module: :users do
       resources :viewing_parties, only: %i[show create new], module: :movies
+      member do
+        get 'similar'
+      end
     end
   end
 end

@@ -114,8 +114,8 @@ RSpec.describe 'Create New Viewing Party', type: :feature do
     it 'They can create a viewing party for the movie with no other users invited' do
       visit new_user_movie_viewing_party_path(@user, @movie['id'])
 
-      expect(page).to have_content("Create a Party for #{@movie['title']}")
-      expect(page).to have_link('Discover Movies', href: discover_user_path(@user))
+      expect(page).to have_content("Create Viewing Party for #{@movie['title']}")
+      expect(page).to have_link('Cancel', href: discover_user_path(@user))
       expect(ViewingParty.count).to eq(0)
       expect(UserParty.count).to eq(0)
 
@@ -128,8 +128,10 @@ RSpec.describe 'Create New Viewing Party', type: :feature do
       expect(ViewingParty.count).to eq(1)
       expect(UserParty.count).to eq(1)
       expect(page).to have_current_path(user_path(@user))
+      expect(page).to have_content @movie['title']
+      expect(page).to have_css "img[src=\"#{TMDB_IMAGE_URL}#{@movie['poster_path']}\"]"
       expect(page).to have_content 'Party Time: 07/21/2026 at 13:30'
-      expect(page).to have_content "Host: #{@user.name}"
+      expect(page).to have_content 'Hosting'
       expect(page).to have_content "Who's Coming?"
 
       viewing_party = ViewingParty.first
@@ -146,8 +148,8 @@ RSpec.describe 'Create New Viewing Party', type: :feature do
 
       visit new_user_movie_viewing_party_path(@user, @movie['id'])
 
-      expect(page).to have_content("Create a Party for #{@movie['title']}")
-      expect(page).to have_link('Discover Movies', href: discover_user_path(@user))
+      expect(page).to have_content("Create Viewing Party for #{@movie['title']}")
+      expect(page).to have_link('Cancel', href: discover_user_path(@user))
       expect(ViewingParty.count).to eq(0)
 
       fill_in 'viewing_party[duration]', with: '180'
@@ -160,8 +162,10 @@ RSpec.describe 'Create New Viewing Party', type: :feature do
 
       expect(ViewingParty.count).to eq(1)
       expect(page).to have_current_path(user_path(@user))
+      expect(page).to have_content @movie['title']
+      expect(page).to have_css "img[src=\"#{TMDB_IMAGE_URL}#{@movie['poster_path']}\"]"
       expect(page).to have_content 'Party Time: 07/21/2026 at 13:30'
-      expect(page).to have_content "Host: #{@user.name}"
+      expect(page).to have_content 'Hosting'
       expect(page).to have_content "Who's Coming?"
       expect(page).to have_content user3.name
       expect(page).not_to have_content user2.name

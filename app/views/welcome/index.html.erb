@@ -1,11 +1,13 @@
-
-<h1>Viewing Party</h1>
-
-<h2>Existing Users</h2>
-<ul id="existing_users">
-   <% @users.each do |user| %>
-      <li><%= link_to user.email, "users/#{user.id}" %></li>
-   <% end %>
-</ul>
-
-<%= button_to 'Create New User', register_user_path, method: :get, class: "btn btn-lg btn-outline-secondary" %><br>
+<div class="container my-4">
+  <h4 class="mb-4 text-center">Users</h4>
+  <ul class="list-group mb-4" id="existing_users">
+    <% @users.each do |user| %>
+      <li class="list-group-item">
+        <%= link_to user.name, user_path(user), class: "text-decoration-none" %> - <%= user.email %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="text-center">
+    <%= button_to 'Create New User', register_user_path, method: :get, class: "btn btn-md btn-outline-secondary" %>
+  </div>
+</div>

@@ -114,7 +114,7 @@ RSpec.describe 'Find movie', type: :feature do
 
       visit user_movie_path(@user, @movie['id'])
 
-      expect(page).to have_link("Create Viewing Party for #{@movie["title"]}")
+      expect(page).to have_link('Create Viewing Party')
       expect(page).to have_content(@movie['title'])
       expect(page).to have_content("Vote: #{@movie['vote_average']}")
       expect(page).to have_content('Runtime: 2 hr and 22 min')
