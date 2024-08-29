@@ -18,7 +18,7 @@
               </h5>
               <p class="card-text">
                 <strong><%= party.find_host === @user ? "Hosting" : "Invited" %></strong><br>
-                <strong>Party Time:</strong> <%= Date.parse(party.date).strftime("%-m/%-d/%y") %> at <%= Time.parse(party.start_time).strftime("%l:%M %p") %><br>
+                <strong>Party Time:</strong> <%= party.date %> at <%= party.start_time %><br>
                 <strong>Who's Coming?</strong>
               </p>
               <ol class="list-unstyled">

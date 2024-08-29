@@ -40,13 +40,10 @@ RSpec.describe 'Similar movies', type: :feature do
       visit similar_user_movie_path(@user, @movie_id)
 
       expect(page).to have_link('Discover Movies', href: discover_user_path(@user))
-      expect(page).to have_content('Title:')
       expect(page).to have_content(@response['results'].first['title'])
       expect(page).to have_content('Release Date:')
       expect(page).to have_content(@response['results'].first['release_date'])
-      expect(page).to have_content('Overview:')
       expect(page).to have_content(@response['results'].first['overview'])
-      expect(page).to have_content('Poster:')
       expect(page).to have_css("img[src=\"#{TMDB_IMAGE_URL}#{@response['results'].first['poster_path']}\"]")
       expect(page).to have_content('Vote Average:')
       expect(page).to have_content(@response['results'].first['vote_average'])

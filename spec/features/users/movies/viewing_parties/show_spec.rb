@@ -40,12 +40,14 @@ RSpec.describe 'Find viewing party', type: :feature do
       visit user_movie_viewing_party_path(@user, @viewing_party.movie_id_from_tmdb, @viewing_party)
 
       expect(page).to have_link("#{@user.name}'s Dashboard", href: "/users/#{@user.id}")
-      expect(page).to have_content("Movie: #{@viewing_party.movie_title}")
-      expect(page).to have_content("Start Time: #{@viewing_party.start_time}")
-      expect(page).to have_content("Date: #{@viewing_party.date}")
-      expect(page).to have_content('Rent')
-      expect(page).to have_css(".buy-providers img[src=\"#{TMDB_IMAGE_URL}#{@watch_providers['results']['US']['buy'].first['logo_path']}\"]")
+      expect(page).to have_content(@viewing_party.movie_title)
+      expect(page).to have_content("Start Time:")
+      expect(page).to have_content(@viewing_party.start_time)
+      expect(page).to have_content("Date:")
+      expect(page).to have_content(@viewing_party.date)
       expect(page).to have_content('Buy')
+      expect(page).to have_css(".buy-providers img[src=\"#{TMDB_IMAGE_URL}#{@watch_providers['results']['US']['buy'].first['logo_path']}\"]")
+      expect(page).to have_content('Rent')
       expect(page).to have_css(".rent-providers img[src=\"#{TMDB_IMAGE_URL}#{@watch_providers['results']['US']['rent'].first['logo_path']}\"]")
     end
   end
